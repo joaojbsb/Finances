@@ -10,6 +10,7 @@ import { Container, Header, UserInfo, Photo, User,
     UserGreeting, UserName, UserWrapper, HighlightCards, Icon,Transactions, Title, 
     TransactionsList, LogoutButton, LoadContainer } from "./styles";
 import theme from "../../global/styles/theme";
+import { useAuth } from "../../hooks/auth";
 
 export interface DataListProps extends TransactionCardProps{
     id: string;
@@ -28,6 +29,7 @@ interface HighlightData{
 
 export function Dashboard(){
     const dataKey = '@gofinances:transactions';
+    const {signOut, user} = useAuth();
 
     const [transactions, setTransactions] = useState<DataListProps[]>([]);
     const [HighlightData, setHighlightData] = useState<HighlightData>({} as HighlightData);
@@ -145,16 +147,17 @@ export function Dashboard(){
             <Header>
                 <UserWrapper>
                     <UserInfo>
-                        <Photo source={{uri: 'https://github.com/joaojbsb.png'}} />
+                        <Photo source={{uri: user.photo}} />
 
                         <User>
                             <UserGreeting>Olá</UserGreeting>
-                            <UserName>Júnior</UserName>
+                            <UserName> {user.name} </UserName>
                         </User>
                     </UserInfo>
                     
-                    <LogoutButton onPress={() => {}}>
+                    <LogoutButton onPress={signOut}>
                         <Icon name="power"/>
+                        {console.log(user.name)}
                     </LogoutButton>
 
                 </UserWrapper> 
