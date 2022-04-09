@@ -54,8 +54,6 @@ function AuthProvider({ children }: AuthProviderProps){
         
            const {type, params} = await  AuthSession.startAsync({ authUrl }) as AuthorizationResponse;
            //console.log(type);
-            console.log(CLIENT_ID)
-            console.log(REDIRECT_URI)
 
           if(type === 'success'){
               const response = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${params.access_token}`);
@@ -68,7 +66,7 @@ function AuthProvider({ children }: AuthProviderProps){
                  name: userInfo.given_name,
                  photo: userInfo.picture
              })
-             console.log(user)
+
         }
 
        } catch (error) {
@@ -109,7 +107,6 @@ function AuthProvider({ children }: AuthProviderProps){
    async function signOut(){
        setUser({} as User);
        await AsyncStorage.removeItem(userStorageKey);
-       console.log(userStorageKey)
    }
 
    useEffect(() => {

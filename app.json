@@ -6,6 +6,16 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "com.junniorlima.gofinances"
+    }
+  },
+  "ios": {
+    "supportsTablet": true,
+    "bundlesIdentifier": "com.pointinformatica.gofinances"
+  },
+  "android": {
+    "package": "com.pointinformatica.gofinances"
   }
 }

@@ -28,8 +28,9 @@ interface HighlightData{
 }
 
 export function Dashboard(){
-    const dataKey = '@gofinances:transactions';
     const {signOut, user} = useAuth();
+    const dataKey = `@gofinances:transactions_user:${user.id}`;
+
 
     const [transactions, setTransactions] = useState<DataListProps[]>([]);
     const [HighlightData, setHighlightData] = useState<HighlightData>({} as HighlightData);
@@ -37,8 +38,12 @@ export function Dashboard(){
 
     function getLastTransactionDate( collection: DataListProps[], type: 'positive' | 'negative'){
 
-        const lastTransaction = new Date(Math.max.apply(Math, collection
-            .filter((transaction)=> transaction.type === type)
+        const collectionFiltered = collection.filter(transaction => transaction.type === type);
+
+        if (collectionFiltered.length === 0) {
+            return 0;
+        }
+        const lastTransaction = new Date(Math.max.apply(Math, collectionFiltered
             .map((transaction) => new Date(transaction.date).getTime())));
 
         return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', {month: 'long'})}`;
@@ -89,7 +94,7 @@ export function Dashboard(){
 
         const lastTransactionEntries = getLastTransactionDate(transactions, 'positive');
         const lastTransactionExpensives = getLastTransactionDate(transactions, 'negative');
-        const totalInterval = `01 a ${lastTransactionExpensives}`;
+        const totalInterval = lastTransactionExpensives === 0 ? 'Não tem transações para mostrar' :`01 a ${lastTransactionExpensives}`;
 
         const total = entriesTotal - expensiveTotal;
 
@@ -99,7 +104,7 @@ export function Dashboard(){
                     style: 'currency',
                     currency: 'BRL'
                 }),
-                lastTransaction: `Última entrada dia ${lastTransactionEntries}`
+                lastTransaction: lastTransactionEntries === 0 ? 'Não tem transações para mostrar' :`Última entrada dia ${lastTransactionEntries}`
             },
 
             expensives:{
@@ -107,7 +112,7 @@ export function Dashboard(){
                     style: 'currency',
                     currency: 'BRL'
                 }),
-                lastTransaction: `Última saída dia ${lastTransactionExpensives}`
+                lastTransaction: lastTransactionExpensives === 0 ? 'Não tem transações para mostrar' :`Última entrada dia ${lastTransactionExpensives}`
             },
 
             total:{

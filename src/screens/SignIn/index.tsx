@@ -1,6 +1,6 @@
 import React, { useContext,useState } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
-import { ActivityIndicator, Alert } from "react-native";
+import { ActivityIndicator, Alert, Platform } from "react-native";
 import GoogleSvg from '../../assets/google.svg';
 import AppleSvg from '../../assets/apple.svg';
 import LogoSvg from '../../assets/logo.svg';
@@ -63,9 +63,20 @@ return(
 
         <Footer>
             <FooterWrapper>
-                <SignInSocialButton title='Login com Google' svg={GoogleSvg} onPress={handleSignInWithGoogle} />
 
-                <SignInSocialButton title='Login com Apple' svg={AppleSvg} onPress={handleSignInWithApple} />
+                <SignInSocialButton 
+                    title='Login com Google' 
+                    svg={GoogleSvg} 
+                    onPress={handleSignInWithGoogle} 
+                />
+                {
+                    Platform.OS === 'ios' &&
+                    <SignInSocialButton 
+                        title='Login com Apple' 
+                        svg={AppleSvg} 
+                        onPress={handleSignInWithApple} 
+                    />
+                }
             </FooterWrapper>
 
             {isLoading && <ActivityIndicator color= {theme.colors.shape} style={{marginTop:18}} />}
