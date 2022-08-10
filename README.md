@@ -2,7 +2,7 @@
 
 ### Projeto de gestão de finanças pessoais desenvolvido com React Native
 
-#### Utilizado React Native, expo cli, Styled Components e outros.
+#### Utilizado React Native, expo cli, TypeScript, Styled Components e outros.
 
 <div>
   <img src='https://user-images.githubusercontent.com/47161770/183785814-2353ee68-3c20-44e5-ba56-054d27c0fd22.jpg' width= "200" margin-left="20"/>
